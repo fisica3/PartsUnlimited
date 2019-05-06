@@ -1,0 +1,34 @@
+trigger:
+- master
+
+pool:
+  name: Hosted VS2017
+  demands: DotNetFramework
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+- script: ls
+- script: dotnet restore PartsUnlimited.sln
+- script: dotnet build $(webSite) --configuration $(buildConfiguration)  --verbosity d
+#- script: dotnet publish $(webSite) --framework netcoreapp2.2 --output $(outputDirectory) --configuration $BuildConfiguration
+  displayName: 'dotnet build $(buildConfiguration)'
+  
+- task: DotNetCoreCLI@2
+  displayName: Publish
+  inputs:
+    command: publish
+    publishWebProjects: True
+    arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
+    zipAfterPublish: True
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'  
+    ArtifactName: 'drop'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: 'env/Templates'
+    ArtifactName: 'ARMTemplates'
