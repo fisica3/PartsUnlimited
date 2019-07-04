@@ -1,0 +1,8 @@
+outputDirectory
+
+\\Publish\\PartsUnlimited
+
+
+webSite
+
+.\\src\\PartsUnlimitedWebsite\\PartsUnlimitedWebsite.csproj
