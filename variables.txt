@@ -6,3 +6,5 @@ outputDirectory
 webSite
 
 .\\src\\PartsUnlimitedWebsite\\PartsUnlimitedWebsite.csproj
+
+templates\release definitions\PUReldef1.json
